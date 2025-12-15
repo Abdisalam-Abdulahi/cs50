@@ -1,0 +1,37 @@
+#include <cs50.h>
+#include <stdio.h>
+
+void c_pyramid(int n);
+int main(void)
+{
+    int n;
+    do
+    {
+        n = get_int("Height: ");
+        c_pyramid(n);
+    }
+    while (n < 1);
+}
+
+void c_pyramid(int n)
+{
+    for (int raws = 0; raws < n; raws++)
+    {
+        for (int space = n; space > raws + 1; space--)
+        {
+            printf(" ");
+        }
+        for (int col = 0; col <= raws; col++)
+        {
+            printf("#");
+        }
+	printf(" ");
+	
+	for (int coli = 0; coli <= raws; coli++)
+	{
+		printf("#");
+	}
+        printf("\n");
+    }
+
+}
