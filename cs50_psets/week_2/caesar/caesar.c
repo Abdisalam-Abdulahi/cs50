@@ -40,6 +40,7 @@ bool only_digits(string key)
 {
     int len = strlen(key);
     int i = 0;
+    int check = 0;
     while (i < len)
     {
         /*
@@ -47,16 +48,20 @@ bool only_digits(string key)
         {
             return false;
         }
-            */
+        */
         if (isdigit(key[i]))
         {
-            return true;
+            check = 0;
         }
         else
         {
             return false;
         }
         i++;
+    }
+    if (check == 0)
+    {
+        return true;
     }
 }
 
