@@ -27,6 +27,7 @@ int candidate_count;
 
 // Function prototypes
 bool vote(int rank, string name, int ranks[]);
+bool cycleExists(int winner, int loser);
 void record_preferences(int ranks[]);
 void add_pairs(void);
 void sort_pairs(void);
@@ -199,6 +200,15 @@ void sort_pairs(void)
 void lock_pairs(void)
 {
     // TODO
+    for (int i = 0; i < pair_count; i++)
+    {
+        int winner = pairs[i].winner;
+        int loser = pairs[i].loser;
+        if (!cycleExists(loser, winner))
+        {
+            locked[winner][loser] = true;
+        }
+    }
     return;
 }
 
@@ -208,3 +218,79 @@ void print_winner(void)
     // TODO
     return;
 }
+
+bool cycleExists(int current, int target)
+{
+    if (current == target)
+    {
+        return true;
+    }
+
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (locked[current][i])
+        {
+            if (cycleExists(i, target))
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+
+/*bool cycleExists(int winner, int loser)
+{
+    if (locked[winner][loser] == true)
+    {
+        return true;
+    }
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (locked[winner][i] == true && cycleExists(i, loser))
+        {
+            return true;
+        }
+    }
+    return false;
+    */
+   /* int que[candidate_count];
+    for (int i = 0; i < candidate_count; i++)
+    {
+        que[i] = 0;
+    }
+    que[winner] = 1;
+
+    int flag = 1;
+    while(flag == 1)
+    {
+        flag = 0;
+        for (int i = 0; i < candidate_count; i++)
+        {
+            if (que[i] == 0)
+            {
+                continue;
+            }
+            for (int j = 0; j < candidate_count; j++)
+            {
+                if (i == j)
+                {
+                    continue;
+                }
+                if (locked[i][j] == true && que[j] == 0)
+                {
+                    que[j] = 1;
+                    flag = 1;
+                }
+            }
+        }
+    }
+    if (que[loser] == 1)
+    {
+        return true;
+    }
+    return false;
+    
+}*/

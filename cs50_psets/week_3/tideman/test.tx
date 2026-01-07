@@ -1,0 +1,26 @@
+The main idea is to keep track of which candidates B beats, and then which candidates those candidates beat, and so on... You can think of B as an octopus 🐙 spreading tentacles out, then whoever is touched will also spread their tentacles out, and so on. We are trying to find out whether the tentacles ever reach A.
+
+Set up an array with one element for each candidate. This is for you to mark (with 1's) candidates that have been "visited". Initialize with 0's, except for B.
+Check the locked array to see who B beats. Tick them off in our visited array. For example, if B beats F and G, now the visited array would hold 1 (or true) at those indices.
+Iterate through the locked array again, this time for B, F and G, and see who is beaten by them. Mark these new candidates in the visited array.
+Repeat step 3 until either:
+'A' gets added to the visited set, which means it would make a cycle, so you can't lock A-B. Or
+Nobody new is marked in the visited set, in which case there is no path from B to A, so you can now lock A-B.
+ 
+
+function pathExists(X, Y) {
+    create 'visited' array with size = num_of_candidates, initialize to all 0.
+    set array to 1 (true) for candidate X's number.
+    make a flag variable to keep track of whether anyone new is added, set to 1 initially.
+
+    while flag is 1,
+        set flag to 0.
+        for each candidate i in the visited array
+            for each other candidate j  // check the 'locked' array
+                if i beats j in the locked array and j is not marked as visited {
+                    mark j as visited (1)
+                    set flag to 1
+                }
+    
+    return [whether Y is visited].
+}
