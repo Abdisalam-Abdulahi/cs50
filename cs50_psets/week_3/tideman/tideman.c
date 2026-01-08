@@ -176,7 +176,10 @@ void sort_pairs(void)
     {
         for (int j = 0; j < pair_count - 1; j++)
         {
-            if ((preferences[pairs[j].winner][pairs[j].loser] - preferences[pairs[j].loser][pairs[j].winner]) < (preferences[pairs[j + 1].winner][pairs[j + 1].loser] - preferences[pairs[j + 1].loser][pairs[j + 1].winner]))
+            if ((preferences[pairs[j].winner][pairs[j].loser] - 
+                 preferences[pairs[j].loser][pairs[j].winner]) < 
+                (preferences[pairs[j + 1].winner][pairs[j + 1].loser] - 
+                 preferences[pairs[j + 1].loser][pairs[j + 1].winner]))
             {
                 pair temp = pairs[j];
                 pairs[j] = pairs[j + 1];
@@ -216,6 +219,35 @@ void lock_pairs(void)
 void print_winner(void)
 {
     // TODO
+    int arr[candidate_count];
+    for (int i = 0; i < candidate_count; i++)
+    {
+        arr[i] = 0;
+    }
+
+    for (int i = 0; i < candidate_count; i++)
+    {
+        for (int j = 0; j < candidate_count; j++)
+        {
+            if (i == j)
+            {
+                continue;
+            }
+            if (locked[i][j])
+            {
+                arr[j] = 1;
+            }
+        }
+    }
+
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (arr[i] == 0)
+        {
+            printf("%s\n", candidates[i]);
+        }
+    }
+
     return;
 }
 
@@ -239,58 +271,3 @@ bool cycleExists(int current, int target)
 
     return false;
 }
-
-
-/*bool cycleExists(int winner, int loser)
-{
-    if (locked[winner][loser] == true)
-    {
-        return true;
-    }
-    for (int i = 0; i < candidate_count; i++)
-    {
-        if (locked[winner][i] == true && cycleExists(i, loser))
-        {
-            return true;
-        }
-    }
-    return false;
-    */
-   /* int que[candidate_count];
-    for (int i = 0; i < candidate_count; i++)
-    {
-        que[i] = 0;
-    }
-    que[winner] = 1;
-
-    int flag = 1;
-    while(flag == 1)
-    {
-        flag = 0;
-        for (int i = 0; i < candidate_count; i++)
-        {
-            if (que[i] == 0)
-            {
-                continue;
-            }
-            for (int j = 0; j < candidate_count; j++)
-            {
-                if (i == j)
-                {
-                    continue;
-                }
-                if (locked[i][j] == true && que[j] == 0)
-                {
-                    que[j] = 1;
-                    flag = 1;
-                }
-            }
-        }
-    }
-    if (que[loser] == 1)
-    {
-        return true;
-    }
-    return false;
-    
-}*/
