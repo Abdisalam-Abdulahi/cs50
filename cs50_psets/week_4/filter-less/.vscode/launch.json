@@ -7,7 +7,7 @@
             "request": "launch",
             "program": "${fileDirname}/${fileBasenameNoExtension}",
             "cwd": "${fileDirname}",
-            "args": ["-r", "images/tower.bmp", "out.bmp"],
+            "args": ["-b", "images/tower.bmp", "out.bmp"],
             "MIMode": "gdb",
             "miDebuggerPath": "/usr/bin/gdb",
             "skipFiles": [
