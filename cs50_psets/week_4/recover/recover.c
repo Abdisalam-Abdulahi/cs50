@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
  
 int main(int argc, char *argv[])
 {
@@ -15,11 +16,63 @@ int main(int argc, char *argv[])
         printf("Could not open file.\n");
         return 2;
     }
+
     uint8_t buffer[512];
-    int check = 0;
-    while (fread(buffer, 1, 512, card) == 512)
+    bool writing = false;
+    FILE *img = NULL;
+    int count = 0;
+
+    while (fread(buffer, 1, 512, card) != 0)
     {
-        char filename[8];
+        bool header = false;
+        if (buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && (buffer[3] & 0xf0) == 0xe0)
+        {
+            header = true;
+        }
+        if (writing == false && header == true)
+        {
+            char filename[8];
+            sprintf(filename, "%03i.jpg", count);
+            img = fopen(filename, "w");
+            if (img == NULL)
+            {
+                return 3;
+            }
+            fwrite(buffer, 1, 512, img);
+            writing = true;
+            count++;
+            // header = false;
+        }
+        else if (writing == true && header == false)
+        {
+            fwrite(buffer, 1, 512, img);
+        }
+        else if (writing && header == true)
+        {
+            fclose(img);
+            char filename[8];
+            sprintf(filename, "%03i.jpg", count);
+            img = fopen(filename, "w");
+            if (img == NULL)
+            {
+                return 3;
+            }
+            fwrite(buffer, 1, 512, img);
+            count++;
+            // break;
+        }
+    }
+    if(writing)
+    {
+        fclose(img);
+        fclose(card);
+    }
+}
+
+
+
+/**
+ *         char filename[8];
         FILE *img;
         if (buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && (buffer[3] & 0xf0) == 0xe0)
         {
@@ -44,4 +97,4 @@ int main(int argc, char *argv[])
             fwrite(buffer, 1, 512, img);
         }
     }
-}
+ */
