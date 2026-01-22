@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug C (GDB)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "cwd": "${fileDirname}",
+            "args": ["dictionaries/small", "texts/grimm.txt"],
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "skipFiles": [
+                "/usr/include/**",
+                "/usr/lib/**",
+                "**/libio/**"
+            ]
+        }
+    ]
+}
