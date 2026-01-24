@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <strings.h>
 
 #include "dictionary.h"
 
@@ -16,7 +17,8 @@ typedef struct node
 } node;
 
 // TODO: Choose number of buckets in hash table
-const unsigned int N = 26;
+const unsigned int N = 1196;
+unsigned int siize = 0;
 
 // Hash table
 node *table[N];
@@ -25,6 +27,17 @@ node *table[N];
 bool check(const char *word)
 {
     // TODO
+    unsigned int value = hash(word);
+    node *ptr = table[value];
+
+    while (ptr != NULL)
+    {
+        if (strcasecmp(word, ptr->word) == 0)
+        {
+            return true;
+        }
+        ptr = ptr->next;
+    }
     return false;
 }
 
@@ -32,7 +45,15 @@ bool check(const char *word)
 unsigned int hash(const char *word)
 {
     // TODO: Improve this hash function
-    return toupper(word[0]) - 'A';
+    unsigned int sum = 0;
+    for (int i = 0, n = strlen(word); i < n; i++)
+    {
+        if (isalpha(word[i]))
+        {
+            sum += toupper(word[i]) - 'A';
+        }
+    }
+    return sum;
 }
 
 // Loads dictionary into memory, returning true if successful, else false
@@ -47,9 +68,7 @@ bool load(const char *dictionary)
         return false;
     }
 
-    char c;
     char tmp_word[LENGTH + 1];
-    int index = 0;
     while (fscanf(file_dict, "%s", tmp_word) != EOF)
     {
         node *new_node = malloc(sizeof(node));
@@ -58,6 +77,7 @@ bool load(const char *dictionary)
             printf("could not allocate memory for new_node\n");
             return false;
         }
+        siize++;
         strcpy(new_node->word, tmp_word);
         new_node->next = NULL;
         unsigned int value = hash(tmp_word);
@@ -70,7 +90,6 @@ bool load(const char *dictionary)
             new_node->next = table[value];
             table[value] = new_node;
         }
-
     }
     fclose(file_dict);
     return true;
@@ -80,12 +99,27 @@ bool load(const char *dictionary)
 unsigned int size(void)
 {
     // TODO
-    return 0;
+    return siize;
 }
 
 // Unloads dictionary from memory, returning true if successful, else false
 bool unload(void)
 {
     // TODO
-    return false;
+    for (int i = 0; i < N; i++)
+    {
+        if (table[i] != NULL)
+        {
+            node *ptr = table[i];
+            node *tmp = table[i];
+
+            while (ptr != NULL)
+            {
+                ptr = ptr->next;
+                free(tmp);
+                tmp = ptr;
+            }
+        }
+    }
+    return true;
 }
