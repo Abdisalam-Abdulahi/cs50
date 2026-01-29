@@ -1,7 +1,7 @@
 import sys
 
 numbers = input("Number: ")
-# numbers = "4003600000000014"
+# numbers = "369421438430814"
 
 # check the validty of the card
 # Reversed_numbers = "4100000000063004"
@@ -35,4 +35,5 @@ elif (first + second == "51" or first + second == "52" or first + second == "53"
     print("MASTERCARD")
 elif first == "4" and (len(og_numbers) == 13 or len(og_numbers) == 16):
     print("VISA")
-
+else:
+    print("INVALID") 
