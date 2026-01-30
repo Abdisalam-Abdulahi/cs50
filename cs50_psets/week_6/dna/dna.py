@@ -28,17 +28,19 @@ def main():
         t_dict[reader.fieldnames[i]] = count
     # TODO: Check database for matching profiles
     for dic in raws:
-        #print(dic)
+        # print(dic)
         same = False
-        for k, v, in dic.items():
+        counter = 0
+        for k, v in dic.items():
             # print(k, v, t_dict.get(k))
             if k in t_dict and t_dict.get(k) == int(v):
                 same = True
+                counter += 1
                 
             else:
                 same = False
-                break
-        if same == True:
+
+        if same == True and counter == len(t_dict):
             print(dic["name"])
             sys.exit(0)
     print("No match")
