@@ -1,0 +1,7 @@
+I would you characterize their audio aura by calculating the 
+averages of energey, dancebility and valence.
+
+well, I am not expert in music so, my calculation are entirely
+based on my naive asumptions, I would expect a company like spotify to have
+better ways to calculate audio aura.
+
