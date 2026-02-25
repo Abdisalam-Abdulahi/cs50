@@ -41,11 +41,19 @@
                 <h2>Part 2: Free Response</h2>
                 <hr>
                 <!-- TODO: Add free response question here -->
+                 <h3>what is the most populous city in Africa</h3>
+                 <p id="para"></p>
+                 <input type="text" id="input">
+                 <button id="sumbit">Check Answer</button>
             </div>
         </div>
 
         <script>
             incorrect = document.querySelectorAll(".incorrect");
+            button = document.getElementById("sumbit");
+            input = document.getElementById("input");
+            para = document.getElementById("para");
+
             incorrect.forEach(element => {
                 element.addEventListener("click", function(){
                     element.style.backgroundColor = "red";
@@ -63,7 +71,19 @@
             })
             });
         
-
+            button.addEventListener("click", ()=>{
+                if (input.value == "Cairo")
+                {
+                    input.style.backgroundColor = "green";
+                    para.innerText = "Correct";
+                }
+                else
+                {
+                    input.style.backgroundColor = "red";
+                    para.innerText = "Incorrect";
+                }
+               // console.log(input.value);
+            })
         </script>
     </body>
 </html>
