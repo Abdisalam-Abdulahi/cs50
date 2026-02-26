@@ -1,0 +1,60 @@
+nav {
+    background-color: rgb(105, 105, 179);
+}
+
+.liContainer {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333333;
+    display: flex;
+   /* justify-content: center;*/
+}
+
+.liContainer li {
+    float: left;
+}
+.liContainer li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.liContainer li a:hover {
+    background-color: #111111;
+}
+
+.liContainer li a.active {
+    background-color: #04AA6D;
+}
+
+.main_Section {
+    background-color: rgb(237, 213, 213);
+    height: 25rem;
+    width: 100%;
+}
+.h31{
+    margin-left: 30%;
+    padding-top: 3%;
+}
+
+h4{
+    margin-left: 20%;
+    padding-top: 2%;
+}
+h5 {
+    margin-left: 20%;
+}
+.h32 {
+    margin-left: 30%;
+}
+#ol1 {
+    margin-left: 20%;
+}
+.list-group-item
+{
+    border-color: azure;
+}
