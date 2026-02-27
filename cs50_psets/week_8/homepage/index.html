@@ -13,9 +13,10 @@
         <nav>
             <ul class="liContainer">
                 <li><a class="active" href="">Home</a></li>
-                <li><a href="">About</a></li>
-                <li><a href="">Projects</a></li>
-                <li style="float: right;"><a href="">Blogs</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="blog.html">Blogs</a></li>
+                <button class="buton">change the background Colour</button>
             </ul>
         </nav>
         <section class="main_Section">
@@ -27,7 +28,6 @@
                 <i class="bi bi-laptop me-2"></i>
                 What I'm Learning
             </h4>
-
             <ol class="list-group list-group-numbered" id="ol1">
                 <li class="list-group-item">Building responsive websites with HTML & CSS</li>
                 <li class="list-group-item">Adding interactivity using JavaScript</li>
@@ -36,5 +36,13 @@
             </ol>
         </div>
         </section>
+        <script>
+            let buton = document.querySelector(".buton");
+            let sec = document.querySelector(".main_Section");
+
+            buton,addEventListener("click", function (){
+                sec.style.backgroundColor = "red";
+            });
+        </script>
     </body>
 </html>

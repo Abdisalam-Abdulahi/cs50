@@ -1,0 +1,18 @@
+HTML elements
+nav -> for navbar
+ul -> used as container of li
+li -> list
+section -> for the main part of the page
+h3 -> used becaues it is bolder than other h
+h4 -> used underneath h3
+h5 -> used underneath h5
+div -> used as container
+ol -> it is ordered list
+script -> to add javascript to the file
+
+css properties
+background-color -> for background color
+margin -> to create space between elements
+padding -> to create space within the element
+color -> to change the color of the text
+height -> to specify the height of an element
