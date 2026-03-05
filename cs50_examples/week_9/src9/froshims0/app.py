@@ -26,15 +26,17 @@ def register():
         return render_template("error.html", message="Missig name")    
     
     # Validate sport
-    sport = request.form.get("sport")
-    if not sport:
-        return render_template("error.html", message="Missing sport")
+    sports = request.form.getlist("sport")
+    if not sports:
+        return render_template("error.html", message="Missing sports")
     
-    if sport not in SPORTS:
-        return render_template("error.html", message="Invalid sport")
+    for sport in sports:
+        if sport not in SPORTS:
+            return render_template("error.html", message="Invalid sport")
     
     # Remember student
-    db.execute("INSERT INTO registrants (name, sport) VALUES(?, ?)", name, sport)
+    for sport in sports:
+        db.execute("INSERT INTO registrants (name, sport) VALUES(?, ?)", name, sport)
 
     # Confirm registration
     return redirect("/registrants")
