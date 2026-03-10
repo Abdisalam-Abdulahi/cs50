@@ -5,6 +5,9 @@ from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
+import datetime
+
+
 from helpers import apology, login_required, lookup, usd
 
 # Configure application
@@ -42,7 +45,40 @@ def index():
 @login_required
 def buy():
     """Buy shares of stock"""
-    return apology("TODO")
+    if request.method == "GET":
+        return render_template("buy.html")
+    
+    elif request.method == "POST":
+
+        symbol = request.form.get("symbol")
+        shares = request.form.get("shares")
+
+        result = lookup(symbol)
+        if result is None:
+            return apology("Invalid symbol")
+        
+        if not shares:
+            return apology("Missing shares")
+
+        shares = int(shares)
+        if shares < 0:
+            return apology("shares must be positive integer")
+        
+        cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
+        cost = float(result["price"]) * shares
+        if cost > cash[0]["cash"]:
+            return apology("OOPS! No enough cash")
+        
+        now = str(datetime.datetime.now())
+
+        db.execute("INSERT INTO purchase (user_id, symbol, numberOfShares, pricePerShare, total, time) VALUES(?, ?, ?, ?, ?, ?)", 
+                   session["user_id"], symbol, shares, float(result["price"]), cost, now)
+        remainingCash = cash[0]["cash"] - cost
+        db.execute("UPDATE users SET cash = ? WHERE id = ?", remainingCash, session["user_id"])
+
+
+    return redirect("/")
+    #return apology("TODO")
 
 
 @app.route("/history")
